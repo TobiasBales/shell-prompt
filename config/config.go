@@ -27,7 +27,7 @@ func (c *Config) populateWithDefaults(dc Config) {
 }
 
 func getDefaultConfig() Config {
-	defaultLine := "λ |path||git| "
+	defaultLine := "λ |time||k8n||path||git| "
 	defaultVCS := true
 
 	return Config{Line: &defaultLine, VCS: &defaultVCS}

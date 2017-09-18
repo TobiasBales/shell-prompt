@@ -7,6 +7,7 @@ import (
 	"github.com/TobiasBales/shell-prompt/config"
 	"github.com/TobiasBales/shell-prompt/segment"
 	"github.com/TobiasBales/shell-prompt/segment/git"
+	"github.com/TobiasBales/shell-prompt/segment/k8n"
 	"github.com/TobiasBales/shell-prompt/segment/path"
 	"github.com/TobiasBales/shell-prompt/segment/time"
 )
@@ -16,6 +17,7 @@ func main() {
 		git.Indicator(),
 		path.Indicator(),
 		time.Indicator(),
+		k8n.Indicator(),
 	}
 
 	c := <-config.ReadConfig()
