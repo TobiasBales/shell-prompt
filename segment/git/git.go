@@ -65,7 +65,7 @@ func (g *git) Value() chan string {
 			c <- ""
 		}
 
-		c <- fmt.Sprintf("%v%v ", branch, dirty)
+		c <- fmt.Sprintf("%v %v ", branch, dirty)
 	}()
 
 	return c
