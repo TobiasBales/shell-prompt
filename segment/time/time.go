@@ -3,11 +3,13 @@ package time
 import (
 	"time"
 
+	"github.com/TobiasBales/shell-prompt/config"
 	"github.com/TobiasBales/shell-prompt/segment"
 	"github.com/logrusorgru/aurora"
 )
 
 type t struct {
+	c config.Config
 }
 
 func (t *t) Value() chan string {
@@ -15,6 +17,10 @@ func (t *t) Value() chan string {
 	now := time.Now()
 
 	go func() {
+		if t.c.Time == nil || *t.c.Time == false {
+			c <- ""
+			return
+		}
 		c <- aurora.Gray(now.Format("15:04")).String() + " "
 	}()
 
@@ -26,6 +32,6 @@ func (t *t) Placeholder() string {
 }
 
 // Indicator returns a segment representing the git status of the cwd
-func Indicator() segment.Segment {
-	return &t{}
+func Indicator(c config.Config) segment.Segment {
+	return &t{c: c}
 }

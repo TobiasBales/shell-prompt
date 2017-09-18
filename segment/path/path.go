@@ -5,11 +5,13 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/TobiasBales/shell-prompt/config"
 	"github.com/TobiasBales/shell-prompt/segment"
 	"github.com/logrusorgru/aurora"
 )
 
 type path struct {
+	c config.Config
 }
 
 func (p *path) Value() chan string {
@@ -44,6 +46,6 @@ func (p *path) Placeholder() string {
 }
 
 // Indicator returns a segment representing the current path
-func Indicator() segment.Segment {
-	return &path{}
+func Indicator(c config.Config) segment.Segment {
+	return &path{c: c}
 }

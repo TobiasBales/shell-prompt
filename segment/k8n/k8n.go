@@ -1,6 +1,7 @@
 package k8n
 
 import (
+	"github.com/TobiasBales/shell-prompt/config"
 	"github.com/TobiasBales/shell-prompt/exec"
 	"github.com/TobiasBales/shell-prompt/segment"
 	"github.com/TobiasBales/shell-prompt/utils"
@@ -25,12 +26,18 @@ func contextIndicator() chan string {
 	return c
 }
 
-type k8n struct{}
+type k8n struct {
+	c config.Config
+}
 
 func (k *k8n) Value() chan string {
 	c := make(chan string)
-
 	go func() {
+		if k.c.K8n == nil || *k.c.K8n == false {
+			c <- ""
+			return
+		}
+
 		ctx := <-contextIndicator()
 		c <- ctx
 	}()
@@ -43,6 +50,6 @@ func (k *k8n) Placeholder() string {
 }
 
 // Indicator returns a segment representing the current k8n context
-func Indicator() segment.Segment {
-	return &k8n{}
+func Indicator(c config.Config) segment.Segment {
+	return &k8n{c: c}
 }

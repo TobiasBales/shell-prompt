@@ -3,6 +3,7 @@ package git
 import (
 	"fmt"
 
+	"github.com/TobiasBales/shell-prompt/config"
 	"github.com/TobiasBales/shell-prompt/exec"
 	"github.com/TobiasBales/shell-prompt/segment"
 	"github.com/TobiasBales/shell-prompt/utils"
@@ -52,12 +53,18 @@ func dirtyIndicator() chan string {
 }
 
 type git struct {
+	c config.Config
 }
 
 func (g *git) Value() chan string {
 	c := make(chan string)
 
 	go func() {
+		if g.c.VCS == nil || *g.c.VCS == false {
+			c <- ""
+			return
+		}
+
 		branch := <-branchIndicator()
 		dirty := <-dirtyIndicator()
 
@@ -76,6 +83,6 @@ func (g *git) Placeholder() string {
 }
 
 // Indicator returns a segment representing the git status of the cwd
-func Indicator() segment.Segment {
-	return &git{}
+func Indicator(c config.Config) segment.Segment {
+	return &git{c: c}
 }

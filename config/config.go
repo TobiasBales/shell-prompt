@@ -13,12 +13,22 @@ import (
 // Config contains the configuration for the shell-prompt
 type Config struct {
 	Line *string
+	K8n  *bool
+	Time *bool
 	VCS  *bool
 }
 
 func (c *Config) populateWithDefaults(dc Config) {
 	if c.Line == nil {
 		c.Line = dc.Line
+	}
+
+	if c.K8n == nil {
+		c.K8n = dc.K8n
+	}
+
+	if c.Time == nil {
+		c.Time = dc.Time
 	}
 
 	if c.VCS == nil {
@@ -29,8 +39,10 @@ func (c *Config) populateWithDefaults(dc Config) {
 func getDefaultConfig() Config {
 	defaultLine := "λ |time||k8n||path||git| "
 	defaultVCS := true
+	defaultTime := true
+	defaultK8n := true
 
-	return Config{Line: &defaultLine, VCS: &defaultVCS}
+	return Config{Line: &defaultLine, K8n: &defaultK8n, Time: &defaultTime, VCS: &defaultVCS}
 }
 
 // ReadConfig reads the configuration from the hard drive

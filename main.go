@@ -13,14 +13,14 @@ import (
 )
 
 func main() {
-	segments := []segment.Segment{
-		git.Indicator(),
-		path.Indicator(),
-		time.Indicator(),
-		k8n.Indicator(),
-	}
-
 	c := <-config.ReadConfig()
+
+	segments := []segment.Segment{
+		git.Indicator(c),
+		path.Indicator(c),
+		time.Indicator(c),
+		k8n.Indicator(c),
+	}
 
 	prompt := *c.Line
 	for _, s := range segments {
